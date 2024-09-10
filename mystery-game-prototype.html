@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mystery Game Prototype</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #001f3f;
+            color: white;
+        }
+        .game-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .cell {
+            background-color: #2c3e50;
+            border: 1px solid #34495e;
+            padding: 10px;
+            text-align: center;
+        }
+        .choices {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .choice-category {
+            background-color: #2c3e50;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        .choice-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+        .choice-item img {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+            background-color: #fff;
+            border-radius: 50%;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #3498db;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        #clue {
+            text-align: center;
+            margin-top: 20px;
+            font-style: italic;
+            color: #f39c12;
+        }
+        .snowflake {
+            color: #fff;
+            font-size: 1em;
+            font-family: Arial, sans-serif;
+            text-shadow: 0 0 5px #000;
+            position: fixed;
+            top: -10%;
+            z-index: -1;
+            user-select: none;
+            cursor: default;
+            animation: fall 10s linear infinite;
+        }
+        @keyframes fall {
+            0% {
+                opacity: 0;
+            }
+            3% {
+                opacity: 0.9;
+            }
+            90% {
+                opacity: 0.9;
+            }
+            100% {
+                transform: translate(0, 97vh);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Mystery Game</h1>
+        <div class="grid">
+            <div class="cell">Suspect</div>
+            <div class="cell">Transmission</div>
+            <div class="cell">Location</div>
+            
+            <div class="cell" id="suspect-guess"></div>
+            <div class="cell" id="transmission-guess"></div>
+            <div class="cell" id="location-guess"></div>
+        </div>
+        
+        <h2>Make Your Choices</h2>
+        <div class="choices">
+            <div class="choice-category">
+                <h3>Suspects</h3>
+                <div class="choice-item" onclick="selectChoice('suspect', 'E coli')">
+                    <img src="/api/placeholder/30/30" alt="E coli">
+                    <span>E coli</span>
+                </div>
+                <div class="choice-item" onclick="selectChoice('suspect', 'C auris')">
+                    <img src="/api/placeholder/30/30" alt="C auris">
+                    <span>C auris</span>
+                </div>
+                <div class="choice-item" onclick="selectChoice('suspect', 'Influenza')">
+                    <img src="/api/placeholder/30/30" alt="Influenza">
+                    <span>Influenza</span>
+                </div>
+            </div>
+            <div class="choice-category">
+                <h3>Transmission Methods</h3>
+                <div class="choice-item" onclick="selectChoice('transmission', 'Thermometer')">
+                    <img src="/api/placeholder/30/30" alt="Thermometer">
+                    <span>Thermometer</span>
+                </div>
+                <div class="choice-item" onclick="selectChoice('transmission', 'Computer keyboard')">
+                    <img src="/api/placeholder/30/30" alt="Computer keyboard">
+                    <span>Computer keyboard</span>
+                </div>
+                <div class="choice-item" onclick="selectChoice('transmission', 'Curtains')">
+                    <img src="/api/placeholder/30/30" alt="Curtains">
+                    <span>Curtains</span>
+                </div>
+            </div>
+            <div class="choice-category">
+                <h3>Locations</h3>
+                <div class="choice-item" onclick="selectChoice('location', 'Operating theater')">
+                    <img src="/api/placeholder/30/30" alt="Operating theater">
+                    <span>Operating theater</span>
+                </div>
+                <div class="choice-item" onclick="selectChoice('location', 'Waiting room')">
+                    <img src="/api/placeholder/30/30" alt="Waiting room">
+                    <span>Waiting room</span>
+                </div>
+                <div class="choice-item" onclick="selectChoice('location', 'ICU')">
+                    <img src="/api/placeholder/30/30" alt="ICU">
+                    <span>ICU</span>
+                </div>
+            </div>
+        </div>
+        
+        <button onclick="submitGuess()">Submit Guess</button>
+        <button onclick="getClue()">Get Clue</button>
+        <p id="clue"></p>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        // Add snowflakes
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+            snowflake.innerHTML = '❄';
+            snowflake.style.left = Math.random() * 100 + 'vw';
+            snowflake.style.animationDuration = Math.random() * 3 + 7 + 's';
+            snowflake.style.opacity = Math.random();
+            snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
+            document.body.appendChild(snowflake);
+
+            setTimeout(() => {
+                snowflake.remove();
+            }, 10000);
+        }
+
+        setInterval(createSnowflake, 100);
+
+        // Game logic
+        const correctAnswer = {
+            suspect: "Influenza",
+            transmission: "Computer keyboard",
+            location: "ICU"
+        };
+
+        const clues = [
+            "It is a winter bug",
+            "This pathogen causes respiratory symptoms",
+            "It's known for causing epidemics"
+        ];
+
+        let currentGuess = {
+            suspect: "",
+            transmission: "",
+            location: ""
+        };
+
+        let clueIndex = 0;
+
+        function selectChoice(category, choice) {
+            currentGuess[category] = choice;
+            document.getElementById(`${category}-guess`).textContent = choice;
+        }
+
+        function submitGuess() {
+            let correct = 0;
+            for (let category in currentGuess) {
+                if (currentGuess[category] === correctAnswer[category]) {
+                    correct++;
+                    document.getElementById(`${category}-guess`).style.backgroundColor = "green";
+                } else {
+                    document.getElementById(`${category}-guess`).style.backgroundColor = "red";
+                }
+            }
+
+            const resultElement = document.getElementById('result');
+            if (correct === 3) {
+                resultElement.textContent = "Congratulations! You solved the mystery!";
+            } else {
+                resultElement.textContent = `You got ${correct} out of 3 correct. Try again!`;
+            }
+        }
+
+        function getClue() {
+            if (clueIndex < clues.length) {
+                document.getElementById('clue').textContent = clues[clueIndex];
+                clueIndex++;
+            } else {
+                document.getElementById('clue').textContent = "No more clues available!";
+            }
+        }
+    </script>
+</body>
+</html>
