@@ -11,13 +11,22 @@
             padding: 20px;
             background-color: #001f3f;
             color: white;
+            overflow-x: hidden;
         }
         .game-container {
             max-width: 800px;
             margin: 0 auto;
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: #228B22; /* Christmas tree green */
             padding: 20px;
             border-radius: 10px;
+        }
+        .header-image {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            margin: 0 auto 20px;
+            display: block;
+            cursor: pointer;
         }
         h1, h2 {
             text-align: center;
@@ -29,8 +38,8 @@
             margin-bottom: 20px;
         }
         .cell {
-            background-color: #2c3e50;
-            border: 1px solid #34495e;
+            background-color: #B22222; /* Change to red */
+            border: 1px solid #FF6347;
             padding: 10px;
             text-align: center;
         }
@@ -40,7 +49,7 @@
             gap: 20px;
         }
         .choice-category {
-            background-color: #2c3e50;
+            background-color: #B22222; /* Change to red */
             border-radius: 5px;
             padding: 10px;
         }
@@ -60,19 +69,13 @@
             display: block;
             margin: 20px auto;
             padding: 10px 20px;
-            background-color: #3498db;
+            background-color: #B22222; /* Change to red */
             border: none;
             color: white;
             cursor: pointer;
         }
         button:hover {
-            background-color: #2980b9;
-        }
-        #clue {
-            text-align: center;
-            margin-top: 20px;
-            font-style: italic;
-            color: #f39c12;
+            background-color: #8B0000;
         }
         .clue-buttons {
             display: flex;
@@ -98,7 +101,7 @@
         }
         .snowflake {
             color: #fff;
-            font-size: 1em;
+            font-size: 2em; /* Increase size of snowflakes */
             font-family: Arial, sans-serif;
             text-shadow: 0 0 5px #000;
             position: fixed;
@@ -123,14 +126,14 @@
                 opacity: 0;
             }
         }
-        .header-image {
-            width: 100%;
-            max-width: 400px;
-            margin: 0 auto 20px;
-            display: block;
-            cursor: pointer;
+        .star {
+            position: fixed;
+            width: 3px;
+            height: 3px;
+            background: yellow;
+            border-radius: 50%;
+            z-index: -2;
         }
-
         .modal {
             display: none;
             position: fixed;
@@ -142,9 +145,8 @@
             overflow: auto;
             background-color: rgba(0,0,0,0.4);
         }
-
         .modal-content {
-            background-color: #2c3e50;
+            background-color: #B22222; /* Change to red */
             margin: 15% auto;
             padding: 20px;
             border: 1px solid #888;
@@ -152,7 +154,6 @@
             max-width: 600px;
             color: white;
         }
-
         .close {
             color: #aaa;
             float: right;
@@ -160,7 +161,6 @@
             font-weight: bold;
             cursor: pointer;
         }
-
         .close:hover,
         .close:focus {
             color: #fff;
@@ -170,33 +170,29 @@
     </style>
 </head>
 <body>
-   <img src="images/frostville-header.png" alt="Frostville Winter Mystery" class="header-image" onclick="openModal()">
-    
+    <img src="images/frostville-header.png" alt="Frostville Winter Mystery" class="header-image" onclick="openModal()">
+
     <div id="contextModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
             <h2>Welcome to the Frostville Winter Mystery!</h2>
-            <p> ‘Twas a week before Christmas and Frostville was buzzing with excitement for its annual Christmas extravaganza. 
-            The Christmas market in the town square sparkled with twinkling lights as visitors flocked from far and wide to ride the giant ferris wheel, 
-tuck into delicious roasted chestnuts, and sip steaming hot chocolate from the cosy winter bar. Inside the town hall, a magical craft market offered every Christmas gift imaginable, handmade with love and holiday cheer. 
-Visitors left Frostville full of festive cheer, excited for the Christmas celebrations to come. <p>
-<p>But this year was different. Just days after leaving Frostville, some of the people who attended began to feel unwell. Could something sinister have crept into Frostville’s winter wonderland? It's up to you to uncover the mystery! 
-Track down what this illness is, figure out how it spread through Frostville, and use the clues to crack the puzzle. Can you save Christmas in time?<p>
-
-<p>Enter your answers to see if you solved the mystery. After submitting your answers, you have the opportunity to enter a competition to win XXX. <p>
+            <p>'Twas a week before Christmas and Frostville was buzzing with excitement for its annual Christmas extravaganza. The Christmas market in the town square sparkled with twinkling lights as visitors flocked from far and wide to ride the giant ferris wheel, tuck into delicious roasted chestnuts, and sip steaming hot chocolate from the cosy winter bar. Inside the town hall, a magical craft market offered every Christmas gift imaginable, handmade with love and holiday cheer. Visitors left Frostville full of festive cheer, excited for the Christmas celebrations to come.</p>
+            <p>But this year was different. Just days after leaving Frostville, some of the people who attended began to feel unwell. Could something sinister have crept into Frostville's winter wonderland? It's up to you to uncover the mystery! Track down what this illness is, figure out how it spread through Frostville, and use the clues to crack the puzzle. Can you save Christmas in time?</p>
+            <p>Enter your answers to see if you solved the mystery. After submitting your answers, you have the opportunity to enter a competition to win XXX.</p>
         </div>
     </div>
 
     <div class="game-container">
-        <h1>What caused the mystery outbreak? </h1>
+        <h1>What caused the mystery outbreak?</h1>
+
         <div class="grid">
             <div class="cell">Bug</div>
             <div class="cell">Transmission mechanism</div>
             <div class="cell">Outbreak location</div>
             
-            <div class="cell" id="suspect-guess"></div>
-            <div class="cell" id="transmission-guess"></div>
-            <div class="cell" id="location-guess"></div>
+            <div id="suspect-guess" class="cell"></div>
+            <div id="transmission-guess" class="cell"></div>
+            <div id="location-guess" class="cell"></div>
         </div>
         
         <h2>Click to select a suspect</h2>
@@ -227,7 +223,7 @@ Track down what this illness is, figure out how it spread through Frostville, an
                     <span>Spread through contaminated food</span>
                 </div>
                 <div class="choice-item" onclick="selectChoice('transmission', 'Spread through surface-to-surface contact')">
-                    <img src="/api/placeholder/30/30" alt="Curtains">
+                    <img src="/api/placeholder/30/30" alt="Spread through surface-to-surface contact">
                     <span>Spread through surface-to-surface contact</span>
                 </div>
             </div>
@@ -261,37 +257,19 @@ Track down what this illness is, figure out how it spread through Frostville, an
     </div>
 
     <script>
-        // Add snowflakes
-        function createSnowflake() {
-            const snowflake = document.createElement('div');
-            snowflake.classList.add('snowflake');
-            snowflake.innerHTML = '❄';
-            snowflake.style.left = Math.random() * 100 + 'vw';
-            snowflake.style.animationDuration = Math.random() * 3 + 7 + 's';
-            snowflake.style.opacity = Math.random();
-            snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
-            document.body.appendChild(snowflake);
-
-            setTimeout(() => {
-                snowflake.remove();
-            }, 10000);
-        }
-
-        setInterval(createSnowflake, 100);
-
         // Game logic
         const correctAnswer = {
-            suspect: "C auris",
-            transmission: "Thermometer",
-            location: "ICU"
+            suspect: "Norovirus",
+            transmission: "Spread through contaminated food",
+            location: "The roasted chestnut stall"
         };
 
         const clues = [
-            "This fungus is known for its drug resistance.",
-            "It's often found on medical devices.",
-            "This pathogen thrives in healthcare settings.",
-            "It can survive on surfaces for long periods.",
-            "This microbe is named after its ear-shaped cells."
+            "This bug often causes outbreaks in crowded places.",
+            "It's known for causing sudden onset of nausea and vomiting.",
+            "This pathogen can survive on surfaces for long periods.",
+            "It's often associated with contaminated food or water.",
+            "This microbe is highly contagious and can spread quickly in a community."
         ];
 
         let currentGuess = {
@@ -333,7 +311,7 @@ Track down what this illness is, figure out how it spread through Frostville, an
                 document.getElementsByClassName('clue-button')[index].style.visibility = 'hidden';
             }
         }
-                // Modal functionality
+
         function openModal() {
             document.getElementById('contextModal').style.display = 'block';
         }
@@ -341,6 +319,38 @@ Track down what this illness is, figure out how it spread through Frostville, an
         function closeModal() {
             document.getElementById('contextModal').style.display = 'none';
         }
+
+        // Add stars to the background
+        function addStars() {
+            for (let i = 0; i < 100; i++) {
+                let star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * window.innerWidth + 'px';
+                star.style.top = Math.random() * window.innerHeight + 'px';
+                document.body.appendChild(star);
+            }
+        }
+
+        // Call the function to add stars
+        addStars();
+
+        // Create snowflakes
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+            snowflake.innerHTML = '❄';
+            snowflake.style.left = Math.random() * 100 + 'vw';
+            snowflake.style.animationDuration = Math.random() * 3 + 7 + 's';
+            snowflake.style.opacity = Math.random();
+            snowflake.style.fontSize = Math.random() * 20 + 10 + 'px'; // Increase size range
+            document.body.appendChild(snowflake);
+
+            setTimeout(() => {
+                snowflake.remove();
+            }, 10000);
+        }
+
+        setInterval(createSnowflake, 100);
 
         // Close the modal if the user clicks outside of it
         window.onclick = function(event) {
