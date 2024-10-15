@@ -176,10 +176,10 @@
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
             <h2>Welcome to the Frostville Winter Mystery!</h2>
-            <p> ‘Twas a week before Christmas and Frostville was buzzing with excitement for its annual Christmas extravaganza. The Christmas market in the town square sparkled with twinkling lights as visitors flocked from far and wide to ride the giant ferris wheel,
-<p> tuck into delicious roasted chestnuts, and sip steaming hot chocolate from the cosy winter bar. Inside the town hall, a magical craft market offered every Christmas gift imaginable, handmade with love and holiday cheer. 
+            <p> ‘Twas a week before Christmas and Frostville was buzzing with excitement for its annual Christmas extravaganza. 
+            The Christmas market in the town square sparkled with twinkling lights as visitors flocked from far and wide to ride the giant ferris wheel, 
+tuck into delicious roasted chestnuts, and sip steaming hot chocolate from the cosy winter bar. Inside the town hall, a magical craft market offered every Christmas gift imaginable, handmade with love and holiday cheer. 
 Visitors left Frostville full of festive cheer, excited for the Christmas celebrations to come. <p>
-
 <p>But this year was different. Just days after leaving Frostville, some of the people who attended began to feel unwell. Could something sinister have crept into Frostville’s winter wonderland? It's up to you to uncover the mystery! 
 Track down what this illness is, figure out how it spread through Frostville, and use the clues to crack the puzzle. Can you save Christmas in time?<p>
 
@@ -190,26 +190,26 @@ Track down what this illness is, figure out how it spread through Frostville, an
     <div class="game-container">
         <h1>What caused the mystery outbreak? </h1>
         <div class="grid">
-            <div class="cell">Suspected bugs</div>
-            <div class="cell">Suspected transmission mechanisms</div>
-            <div class="cell">Suspected outbreak locations</div>
+            <div class="cell">Bug</div>
+            <div class="cell">Transmission mechanism</div>
+            <div class="cell">Outbreak location</div>
             
             <div class="cell" id="suspect-guess"></div>
             <div class="cell" id="transmission-guess"></div>
             <div class="cell" id="location-guess"></div>
         </div>
         
-        <h2>Make Your Choices</h2>
+        <h2>Click to select a suspect</h2>
         <div class="choices">
             <div class="choice-category">
-                <h3>Suspects</h3>
-                <div class="choice-item" onclick="selectChoice('suspect', 'E coli')">
-                    <img src="images/ecoli.png" alt="E coli">
-                    <span>E coli</span>
+                <h3>Suspected bugs</h3>
+                <div class="choice-item" onclick="selectChoice('suspect', 'Norovirus')">
+                    <img src="images/norovirus.png" alt="Norovirus">
+                    <span>Norovirus</span>
                 </div>
-                <div class="choice-item" onclick="selectChoice('suspect', 'C auris')">
-                    <img src="images/cauris.png" alt="C auris">
-                    <span>C auris</span>
+                <div class="choice-item" onclick="selectChoice('suspect', 'Strep A')">
+                    <img src="images/strepa.png" alt="Strep A">
+                    <span>Strep A</span>
                 </div>
                 <div class="choice-item" onclick="selectChoice('suspect', 'Influenza')">
                     <img src="images/influenza.png" alt="Influenza">
@@ -217,33 +217,33 @@ Track down what this illness is, figure out how it spread through Frostville, an
                 </div>
             </div>
             <div class="choice-category">
-                <h3>Transmission Methods</h3>
-                <div class="choice-item" onclick="selectChoice('transmission', 'Thermometer')">
-                    <img src="/api/placeholder/30/30" alt="Thermometer">
-                    <span>Thermometer</span>
+                <h3>Suspected transmission mechanisms</h3>
+                <div class="choice-item" onclick="selectChoice('transmission', 'Spread through the air via droplets')">
+                    <img src="/api/placeholder/30/30" alt="Spread through the air via droplets">
+                    <span>Spread through the air via droplets</span>
                 </div>
-                <div class="choice-item" onclick="selectChoice('transmission', 'Computer keyboard')">
-                    <img src="/api/placeholder/30/30" alt="Computer keyboard">
-                    <span>Computer keyboard</span>
+                <div class="choice-item" onclick="selectChoice('transmission', 'Spread through contaminated food')">
+                    <img src="/api/placeholder/30/30" alt="Spread through contaminated food">
+                    <span>Spread through contaminated food</span>
                 </div>
-                <div class="choice-item" onclick="selectChoice('transmission', 'Curtains')">
+                <div class="choice-item" onclick="selectChoice('transmission', 'Spread through surface-to-surface contact')">
                     <img src="/api/placeholder/30/30" alt="Curtains">
-                    <span>Curtains</span>
+                    <span>Spread through surface-to-surface contact</span>
                 </div>
             </div>
             <div class="choice-category">
-                <h3>Locations</h3>
-                <div class="choice-item" onclick="selectChoice('location', 'Operating theatre')">
-                    <img src="/api/placeholder/30/30" alt="Operating theatre">
-                    <span>Operating theatre</span>
+                <h3>Suspected outbreak locations</h3>
+                <div class="choice-item" onclick="selectChoice('location', 'The Christmas market in the town square')">
+                    <img src="/api/placeholder/30/30" alt="The Christmas market in the town square">
+                    <span>The Christmas market in the town square</span>
                 </div>
-                <div class="choice-item" onclick="selectChoice('location', 'Waiting room')">
-                    <img src="/api/placeholder/30/30" alt="Waiting room">
-                    <span>Waiting room</span>
+                <div class="choice-item" onclick="selectChoice('location', 'The craft market inside the town hall')">
+                    <img src="/api/placeholder/30/30" alt="The craft market inside the town hall">
+                    <span>The craft market inside the town hall</span>
                 </div>
-                <div class="choice-item" onclick="selectChoice('location', 'ICU')">
-                    <img src="/api/placeholder/30/30" alt="ICU">
-                    <span>ICU</span>
+                <div class="choice-item" onclick="selectChoice('location', 'The roasted chestnut stall')">
+                    <img src="/api/placeholder/30/30" alt="The roasted chestnut stall">
+                    <span>The roasted chestnut stall</span>
                 </div>
             </div>
         </div>
