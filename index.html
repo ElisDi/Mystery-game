@@ -96,14 +96,19 @@
 
 ##########################################################################################
 
-        .clue-buttons {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 20px;
-        }
-        .clue-button {
-    width: 70px; /* Increased from 50px */
-    height: 70px; /* Increased from 50px */
+.clue-buttons {
+    display: flex;
+    justify-content: center; /* Changed from space-around to center */
+    align-items: center; /* Added to vertically center the buttons */
+    flex-wrap: nowrap; /* Ensures buttons stay on one line */
+    gap: 10px; /* Adds space between buttons */
+    margin-top: 20px;
+}
+
+.clue-button {
+    flex: 0 0 auto; /* Prevents buttons from growing or shrinking */
+    width: 70px;
+    height: 70px;
     background-color: transparent;
     border: none;
     cursor: pointer;
@@ -118,6 +123,8 @@
             height: 100%;
             object-fit: contain;
         }
+
+############################################################################################################
         .snowflake {
             color: #fff;
             font-size: 2em; /* Increase size of snowflakes */
