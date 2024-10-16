@@ -35,24 +35,26 @@
             text-align: center;
         }
         .grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .cell {
-            background-color: #001f3f;
-            border: 1px solid #FFFFFF;
-            padding: 10px;
-            text-align: center;
-        }
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px; /* Increased from 10px */
+    margin-bottom: 30px; /* Increased from 20px */
+}
+
+.cell {
+    background-color: #B22222;
+    border: 1px solid #FF6347;
+    padding: 15px; /* Increased from 10px */
+    text-align: center;
+    font-size: 18px; /* Increased font size */
+}
         .choices {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 20px;
         }
         .choice-category {
-            background-color: #001f3f;
+            background-color: #FFFFFF;
             border-radius: 5px;
             padding: 10px;
         }
@@ -86,14 +88,14 @@
             margin-top: 20px;
         }
         .clue-button {
-            width: 50px;
-            height: 50px;
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            padding: 0;
-        }
+    width: 70px; /* Increased from 50px */
+    height: 70px; /* Increased from 50px */
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    padding: 0;
+}
         .clue-button:hover {
             transform: scale(1.1);
         }
