@@ -14,12 +14,15 @@
             overflow-x: hidden;
         }
         .game-container {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: #0B5345; /* Darker green */
-            padding: 20px;
-            border-radius: 10px;
-        }
+    width: 90%; /* This makes it responsive */
+    max-width: 1000px; /* Increased from 800px */
+    min-width: 320px; /* Ensures it's not too small on mobile devices */
+    margin: 0 auto;
+    background-color: #0B5345; /* Darker green */
+    padding: 30px; /* Increased padding for more space inside */
+    border-radius: 10px;
+    box-sizing: border-box; /* Ensures padding is included in width */
+}
         .header-image {
             width: 100%;
             max-width: 600px;
@@ -209,7 +212,7 @@
                     <span>Strep A</span>
                 </div>
                 <div class="choice-item" onclick="selectChoice('suspect', 'Influenza')">
-                    <img src="images/flu.png" alt="Influenza"> alt="Influenza">
+                    <img src="images/flu.png" alt="Influenza">
                     <span>Influenza</span>
                 </div>
             </div>
