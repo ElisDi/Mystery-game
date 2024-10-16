@@ -5,27 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Frostville Winter Mystery</title>
     <style>
-
+        /* General Styles */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: #001f3f; # Dark blue
+            background-color: #001f3f; /* Dark blue */
             color: white;
             overflow-x: hidden;
         }
 
+        /* Game Container */
         .game-container {
-    width: 90%; /* This makes it responsive */
-    max-width: 1200px; /* Increased from 800px */
-    min-width: 320px; /* Ensures it's not too small on mobile devices */
-    margin: 0 auto;
-    background-color: #0B5345; /* Darker green */
-    padding: 30px; /* Increased padding for more space inside */
-    border-radius: 10px;
-    box-sizing: border-box; /* Ensures padding is included in width */
-}
+            width: 90%;
+            max-width: 1200px;
+            min-width: 320px;
+            margin: 0 auto;
+            background-color: #0B5345; /* Darker green */
+            padding: 30px;
+            border-radius: 10px;
+            box-sizing: border-box;
+        }
 
+        /* Header Image */
         .header-image {
             width: 100%;
             max-width: 600px;
@@ -35,26 +37,30 @@
             cursor: pointer;
         }
 
+        /* Typography */
         h1, h2 {
             text-align: center;
             color: white;
         }
 
+        /* Grid Layout */
         .grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px; /* Increased from 10px */
-    margin-bottom: 30px; /* Increased from 20px */
-}
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
 
-.cell {
-    background-color: #001f3f;
-    border: 1px solid #FFFFFF;
-    padding: 15px; /* Increased from 10px */
-    text-align: center;
-    font-size: 18px; /* Increased font size */
-    color: white; /* Explicitly set to white */
-}
+        .cell {
+            background-color: #001f3f;
+            border: 1px solid #FFFFFF;
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+            color: white;
+        }
+
+        /* Choice Section */
         .choices {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -65,69 +71,44 @@
             background-color: #FFFFFF;
             border-radius: 5px;
             padding: 10px;
-            color: #001f3f; 
+            color: #001f3f;
             text-align: center;
         }
+
         .choice-item {
             display: flex;
             align-items: center;
             margin: 10px 0;
             cursor: pointer;
         }
+
         .choice-item img {
             width: 50px;
             height: 50px;
             margin-right: 15px;
             object-fit: contain;
         }
+
+        /* Button Styles */
         button {
-    display: block;
-    margin: 50px auto;
-    padding: 15px 30px; /* Increased padding for larger button */
-    background-color: #001f3f;
-    border: none;
-    color: white;
-    cursor: pointer;
-    font-size: 18px; /* Increased font size for larger button */
-}
+            display: block;
+            margin: 50px auto;
+            padding: 15px 30px;
+            background-color: #001f3f;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
         button:hover {
             background-color: #8B0000;
         }
 
-##########################################################################################
-
-.clue-buttons {
-    display: flex;
-    justify-content: center; /* Changed from space-around to center */
-    align-items: center; /* Added to vertically center the buttons */
-    flex-wrap: nowrap; /* Ensures buttons stay on one line */
-    gap: 10px; /* Adds space between buttons */
-    margin-top: 20px;
-}
-
-.clue-button {
-    flex: 0 0 auto; /* Prevents buttons from growing or shrinking */
-    width: 70px;
-    height: 70px;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-    padding: 0;
-}
-        .clue-button:hover {
-            transform: scale(1.1);
-        }
-        .clue-button img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-############################################################################################################
+        /* Snowflake Animation */
         .snowflake {
             color: #fff;
-            font-size: 2em; /* Increase size of snowflakes */
+            font-size: 2em;
             font-family: Arial, sans-serif;
             text-shadow: 0 0 5px #000;
             position: fixed;
@@ -137,21 +118,15 @@
             cursor: default;
             animation: fall 10s linear infinite;
         }
+
         @keyframes fall {
-            0% {
-                opacity: 0;
-            }
-            3% {
-                opacity: 0.9;
-            }
-            90% {
-                opacity: 0.9;
-            }
-            100% {
-                transform: translate(0, 97vh);
-                opacity: 0;
-            }
+            0% { opacity: 0; }
+            3% { opacity: 0.9; }
+            90% { opacity: 0.9; }
+            100% { transform: translate(0, 97vh); opacity: 0; }
         }
+
+        /* Star Background */
         .star {
             position: fixed;
             width: 5px;
@@ -159,8 +134,10 @@
             background: yellow;
             border-radius: 50%;
             z-index: -2;
-              box-shadow: 0 0 4px 1px yellow;
+            box-shadow: 0 0 4px 1px yellow;
         }
+
+        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -172,8 +149,9 @@
             overflow: auto;
             background-color: rgba(0,0,0,0.4);
         }
+
         .modal-content {
-            background-color: #B22222; /* Change to red */
+            background-color: #B22222;
             margin: 15% auto;
             padding: 20px;
             border: 1px solid #888;
@@ -181,6 +159,7 @@
             max-width: 600px;
             color: white;
         }
+
         .close {
             color: #aaa;
             float: right;
@@ -188,6 +167,7 @@
             font-weight: bold;
             cursor: pointer;
         }
+
         .close:hover,
         .close:focus {
             color: #fff;
@@ -197,8 +177,10 @@
     </style>
 </head>
 <body>
+    <!-- Header Image -->
     <img src="images/frostville-header.png" alt="Frostville Winter Mystery" class="header-image" onclick="openModal()">
 
+    <!-- Modal -->
     <div id="contextModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
@@ -209,9 +191,11 @@
         </div>
     </div>
 
+    <!-- Main Game Container -->
     <div class="game-container">
         <h1>What caused the mystery outbreak?</h1>
 
+        <!-- Grid for Guesses -->
         <div class="grid">
             <div class="cell">Bug</div>
             <div class="cell">Spread mechanism</div>
@@ -223,7 +207,9 @@
         </div>
         
         <h2>Click to select a suspect</h2>
+        <!-- Choices Section -->
         <div class="choices">
+            <!-- Suspected Bugs -->
             <div class="choice-category">
                 <h3>Suspected bugs</h3>
                 <div class="choice-item" onclick="selectChoice('suspect', 'Norovirus')">
@@ -239,6 +225,7 @@
                     <span>Influenza</span>
                 </div>
             </div>
+            <!-- Suspected Spread Mechanisms -->
             <div class="choice-category">
                 <h3>Suspected spread mechanisms</h3>
                 <div class="choice-item" onclick="selectChoice('transmission', 'Through the air via droplets')">
@@ -254,6 +241,7 @@
                     <span>Through surface-to-surface contact</span>
                 </div>
             </div>
+            <!-- Suspected Outbreak Locations -->
             <div class="choice-category">
                 <h3>Suspected outbreak locations</h3>
                 <div class="choice-item" onclick="selectChoice('location', 'Christmas market (town square)')">
@@ -271,15 +259,10 @@
             </div>
         </div>
         
+        <!-- Submit Button -->
         <button onclick="submitGuess()">Submit Guess</button>
-        <div class="clue-buttons">
-            <button class="clue-button" onclick="getClue(0)"><img src="images/snowman1.png" alt="Clue 1"></button>
-            <button class="clue-button" onclick="getClue(1)"><img src="images/snowman2.png" alt="Clue 2"></button>
-            <button class="clue-button" onclick="getClue(2)"><img src="images/snowman3.png" alt="Clue 3"></button>
-            <button class="clue-button" onclick="getClue(3)"><img src="images/snowman4.png" alt="Clue 4"></button>
-            <button class="clue-button" onclick="getClue(4)"><img src="images/snowman5.png" alt="Clue 5"></button>
-        </div>
-        <p id="clue"></p>
+        
+        <!-- Result Display -->
         <p id="result"></p>
     </div>
 
@@ -287,17 +270,9 @@
         // Game logic
         const correctAnswer = {
             suspect: "Influenza",
-            transmission: "Spread through the air via droplets",
-            location: "The craft market inside the town hall"
+            transmission: "Through the air via droplets",
+            location: "Craft market (town hall)"
         };
-
-        const clues = [
-            "This bug often causes outbreaks in crowded places.",
-            "It's known for causing sudden onset of nausea and vomiting.",
-            "This pathogen can survive on surfaces for long periods.",
-            "It's often associated with contaminated food or water.",
-            "This microbe is highly contagious and can spread quickly in a community."
-        ];
 
         let currentGuess = {
             suspect: "",
@@ -305,13 +280,13 @@
             location: ""
         };
 
-        let usedClues = new Set();
-
+        // Function to select a choice
         function selectChoice(category, choice) {
             currentGuess[category] = choice;
             document.getElementById(`${category}-guess`).textContent = choice;
         }
 
+        // Function to submit a guess
         function submitGuess() {
             let correct = 0;
             for (let category in currentGuess) {
@@ -331,14 +306,7 @@
             }
         }
 
-        function getClue(index) {
-            if (!usedClues.has(index)) {
-                document.getElementById('clue').textContent = clues[index];
-                usedClues.add(index);
-                document.getElementsByClassName('clue-button')[index].style.visibility = 'hidden';
-            }
-        }
-
+        // Modal functions
         function openModal() {
             document.getElementById('contextModal').style.display = 'block';
         }
@@ -348,17 +316,17 @@
         }
 
         // Add stars to the background
-       function addStars() {
-    for (let i = 0; i < 30; i++) {  // Reduced from 100 to 30
-        let star = document.createElement('div');
-        star.className = 'star';
-        star.style.left = Math.random() * window.innerWidth + 'px';
-        star.style.top = Math.random() * window.innerHeight + 'px';
-        star.style.width = Math.random() * 4 + 2 + 'px';  // Random size between 2-6px
-        star.style.height = star.style.width;
-        document.body.appendChild(star);
-    }
-}
+        function addStars() {
+            for (let i = 0; i < 30; i++) {
+                let star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * window.innerWidth + 'px';
+                star.style.top = Math.random() * window.innerHeight + 'px';
+                star.style.width = Math.random() * 4 + 2 + 'px';
+                star.style.height = star.style.width;
+                document.body.appendChild(star);
+            }
+        }
 
         // Call the function to add stars
         addStars();
@@ -371,7 +339,7 @@
             snowflake.style.left = Math.random() * 100 + 'vw';
             snowflake.style.animationDuration = Math.random() * 3 + 7 + 's';
             snowflake.style.opacity = Math.random();
-            snowflake.style.fontSize = Math.random() * 20 + 10 + 'px'; // Increase size range
+            snowflake.style.fontSize = Math.random() * 20 + 10 + 'px';
             document.body.appendChild(snowflake);
 
             setTimeout(() => {
