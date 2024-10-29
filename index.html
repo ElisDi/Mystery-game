@@ -27,34 +27,30 @@
             box-sizing: border-box;
         }
 
-        /* Header Image */
-        .header-image {
+
+.header-container {
+    position: relative;
     width: 100%;
     max-width: 600px;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+}
+
+.header-image {
+    width: 100%;
     height: auto;
     cursor: pointer;
 }
 
-.header-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    max-width: 800px;
-    margin: 0 auto 20px;
-}
-
 .click-prompt {
+    position: absolute;
+    right: -150px;  /* Adjust this value to move the prompt left or right */
     color: #fff;
     font-size: 1.2em;
     animation: pulse 2s infinite;
     text-align: left;
-}
-
-@keyframes pulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.5; }
-    100% { opacity: 1; }
+    width: 120px;  /* Give the prompt a fixed width */
 }
 
         /* Typography */
