@@ -130,6 +130,105 @@
             background-color: #1c5380;
         }
 
+        /* Snowmen Styles */
+        .snowmen-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .snowman {
+            width: 150px;
+            height: 150px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            border-radius: 10px;
+            border: 3px solid transparent;
+        }
+
+        .snowman:hover {
+            transform: scale(1.1);
+            border-color: #fff;
+        }
+
+        .snowman-label {
+            text-align: center;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .snowman-wrapper {
+            text-align: center;
+        }
+
+        /* Symptom Sorting Game Styles */
+        .sorting-game {
+            margin: 20px 0;
+        }
+
+        .symptoms-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        .symptom {
+            background: #143d59;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: move;
+            user-select: none;
+            border: 2px solid #fff;
+        }
+
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .category {
+            border: 2px dashed #fff;
+            padding: 15px;
+            min-height: 200px;
+            border-radius: 8px;
+            background: rgba(20, 61, 89, 0.5);
+        }
+
+        .category-title {
+            text-align: center;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .dragging {
+            opacity: 0.5;
+        }
+
+        .correct {
+            background: #2ecc71;
+            border-color: #27ae60;
+        }
+
+        .incorrect {
+            background: #e74c3c;
+            border-color: #c0392b;
+        }
+
+        .success-message {
+            display: none;
+            background: #2ecc71;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
         /* Modal Styles */
         .modal, .hint-modal {
             display: none;
@@ -282,7 +381,7 @@
             </div>
             <div class="clue-box" onclick="showHint(2)">
                 <h3>Clue 2</h3>
-                <p>Click to reveal</p>
+                <p>Symptom Analysis</p>
             </div>
         </div>
     </div>
@@ -301,16 +400,27 @@
             location: ""
         };
 
-        // Hint system
+        // Symptom categories for the sorting game
+        const symptomCategories = {
+            droplets: ['Coughing', 'Sneezing', 'Shortness of breath', 'Runny nose'],
+            food: ['Stomach cramp', 'Diarrhoea', 'Nausea'],
+            both: ['Fever', 'Fatigue (lack of energy)', 'Loss of appetite']
+        };
+
+        // Hints content
         const hints = {
-            1: "In the heart of Frostville, two identical snowmen stand in the town square. But these snowmen are far from ordinary—once a day, for one magical hour, they come to life and speak. Yet, there's a twist: one snowman always tells the truth, and the other always lies. You don't know which is which, but you've come seeking answers about what bug has caused the illness in Frostville and think they might have the answer.\n\nSnowman A says:\n\"If you asked my brother whether the outbreak was caused by influenza, he would say no. Also, I heard rumours that the outbreak began because of a bad chestnut\"\n\nSnowman B says:\n\"It's a virus causing the outbreak so antibiotics won't work here. A vaccine exists against this bug though.\"\n\nCan you piece together the truth from the snowmen's riddles to determine which bug caused the outbreak?",
-            2: "Several visitors mentioned feeling feverish and having muscle aches after attending the indoor craft fair. The symptoms spread quickly among family members who hadn't even visited Frostville..."
+            1: "In the heart of Frostville, two identical snowmen stand in the town square. But these snowmen are far from ordinary—once a day, for one magical hour, they come to life and speak. Yet, there's a twist: one snowman always tells the truth, and the other always lies. You don't know which is which, but you've come seeking answers about what bug has caused the illness in Frostville and think they might have the answer.",
+            2: "A local doctor has collected information about the symptoms people have reported after they returning from the market. They have given you with the list of symptoms and will tell you how many people experienced them if you can correct categorise the symptoms into one of the following groups:\n\n1. Illnesses spread through the air via droplets\n2. Illness spread through contaminated food\n3. Illnesses that can be spread by both methods\n\nPlease categorise the symptoms into the most likely group.",
+            "snowmanA": "If you asked my brother whether the outbreak was caused by influenza, he would say no. Also, I heard rumours that the outbreak began because of a bad chestnut",
+            "snowmanB": "It's a virus causing the outbreak so antibiotics won't work here. A vaccine exists against this bug though."
         };
 
         // Function to select a choice
         function selectChoice(category, choice) {
             currentGuess[category] = choice;
-            document.getElementById(`${category}-guess`).textContent = choice;
+            document.getElementById(`${category}-guess`).text
+
+document.getElementById(`${category}-guess`).textContent = choice;
         }
 
         // Function to submit a guess
@@ -342,18 +452,147 @@
             document.getElementById('contextModal').style.display = 'none';
         }
 
-        function showHint(hintNumber) {
-            const modal = document.getElementById('hintModal');
-            const hintText = document.getElementById('hintText');
-            hintText.innerHTML = hints[hintNumber].replace(/\n/g, '<br>');
-            modal.style.display = 'block';
-        }
-
         function closeHintModal() {
             document.getElementById('hintModal').style.display = 'none';
         }
 
-        // Window click handler for modals
+        // Function to show hints
+        function showHint(hintNumber) {
+            const modal = document.getElementById('hintModal');
+            const hintText = document.getElementById('hintText');
+            
+            if (hintNumber === 1) {
+                hintText.innerHTML = `
+                    <p>${hints[1]}</p>
+                    <div class="snowmen-container">
+                        <div class="snowman-wrapper">
+                            <img src="images/snowman1.png" alt="Snowman A" class="snowman" onclick="showSnowmanMessage('A')">
+                            <div class="snowman-label">Snowman A</div>
+                        </div>
+                        <div class="snowman-wrapper">
+                            <img src="images/snowman2.png" alt="Snowman B" class="snowman" onclick="showSnowmanMessage('B')">
+                            <div class="snowman-label">Snowman B</div>
+                        </div>
+                    </div>
+                    <p>Click on each snowman to hear what they have to say!</p>`;
+            } else if (hintNumber === 2) {
+                // Create symptom sorting game
+                hintText.innerHTML = `
+                    <p>${hints[2]}</p>
+                    <div class="sorting-game">
+                        <div class="symptoms-container">
+                            ${getAllSymptoms().map(symptom => 
+                                `<div class="symptom" draggable="true" data-symptom="${symptom}">${symptom}</div>`
+                            ).join('')}
+                        </div>
+                        <div class="categories">
+                            <div class="category" data-category="droplets">
+                                <div class="category-title">Air via Droplets</div>
+                            </div>
+                            <div class="category" data-category="food">
+                                <div class="category-title">Contaminated Food</div>
+                            </div>
+                            <div class="category" data-category="both">
+                                <div class="category-title">Both Methods</div>
+                            </div>
+                        </div>
+                        <div class="success-message"></div>
+                    </div>`;
+                
+                // Initialize drag and drop
+                initializeDragAndDrop();
+            } else {
+                hintText.innerHTML = hints[hintNumber];
+            }
+            modal.style.display = 'block';
+        }
+
+        // Function to show snowman messages
+        function showSnowmanMessage(snowman) {
+            const modal = document.getElementById('hintModal');
+            const hintText = document.getElementById('hintText');
+            const message = hints[`snowman${snowman}`];
+            
+            hintText.innerHTML = `
+                <h3>Snowman ${snowman} says:</h3>
+                <p>${message}</p>
+                <button onclick="showHint(1)" style="margin-top: 20px;">← Back to both snowmen</button>`;
+        }
+
+        // Helper function to get all symptoms
+        function getAllSymptoms() {
+            return [...symptomCategories.droplets, ...symptomCategories.food, ...symptomCategories.both];
+        }
+
+        // Function to check symptom placement
+        function checkPlacement(symptom, category) {
+            return symptomCategories[category].includes(symptom);
+        }
+
+        // Function to show success message
+        function showSuccessMessage() {
+            const successMessage = document.querySelector('.success-message');
+            successMessage.style.display = 'block';
+            successMessage.innerHTML = "Out of the 100 people with symptoms collected, only two people had symptoms similar to illnesses spread via contaminated food. The remaining 98 people had symptoms found in illnesses spread through the air via droplets, or fever, fatigue and loss of appetite";
+        }
+
+        // Initialize drag and drop functionality
+        function initializeDragAndDrop() {
+            const symptoms = document.querySelectorAll('.symptom');
+            const categories = document.querySelectorAll('.category');
+            let correctPlacements = 0;
+            const totalSymptoms = getAllSymptoms().length;
+
+            symptoms.forEach(symptom => {
+                symptom.addEventListener('dragstart', dragStart);
+                symptom.addEventListener('dragend', dragEnd);
+            });
+
+            categories.forEach(category => {
+                category.addEventListener('dragover', dragOver);
+                category.addEventListener('drop', drop);
+            });
+
+            function dragStart(e) {
+                e.target.classList.add('dragging');
+            }
+
+            function dragEnd(e) {
+                e.target.classList.remove('dragging');
+            }
+
+            function dragOver(e) {
+                e.preventDefault();
+            }
+
+            function drop(e) {
+                e.preventDefault();
+                const symptom = document.querySelector('.dragging');
+                const category = e.target.closest('.category');
+                const symptomText = symptom.dataset.symptom;
+                const categoryType = category.dataset.category;
+
+                // Check if placement is correct
+                const isCorrect = checkPlacement(symptomText, categoryType);
+                
+                // Update symptom appearance and move it
+                symptom.classList.remove('incorrect');
+                symptom.classList.toggle('correct', isCorrect);
+                symptom.classList.toggle('incorrect', !isCorrect);
+                
+                if (isCorrect && !category.contains(symptom)) {
+                    category.appendChild(symptom);
+                    correctPlacements++;
+                    
+                    // Check if all symptoms are correctly placed
+                    if (correctPlacements === totalSymptoms) {
+                        showSuccessMessage();
+                    }
+                }
+            }
+        }
+
+        // Close modal when clicking outside
         window.onclick = function(event) {
             const contextModal = document.getElementById('contextModal');
             const hintModal = document.getElementById('hintModal');
