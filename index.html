@@ -10,7 +10,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: #001f3f; /* Dark blue */
+            background-color: #001f3f;
             color: white;
             overflow-x: hidden;
         }
@@ -21,7 +21,7 @@
             max-width: 1200px;
             min-width: 320px;
             margin: 0 auto;
-            background-color: #0B5345; /* Darker green */
+            background-color: #0B5345;
             padding: 30px;
             border-radius: 10px;
             box-sizing: border-box;
@@ -105,40 +105,33 @@
             background-color: #8B0000;
         }
 
-        /* Snowflake Animation */
-        .snowflake {
-            color: #fff;
-            font-size: 2em;
-            font-family: Arial, sans-serif;
-            text-shadow: 0 0 5px #000;
-            position: fixed;
-            top: -10%;
-            z-index: -1;
-            user-select: none;
-            cursor: default;
-            animation: fall 10s linear infinite;
+        /* Clue Boxes Styles */
+        .clue-container {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px auto;
+            gap: 20px;
+            max-width: 800px;
         }
 
-        @keyframes fall {
-            0% { opacity: 0; }
-            3% { opacity: 0.9; }
-            90% { opacity: 0.9; }
-            100% { transform: translate(0, 97vh); opacity: 0; }
+        .clue-box {
+            background-color: #143d59;
+            border: 2px solid #FFFFFF;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            width: 45%;
+            text-align: center;
         }
 
-        /* Star Background */
-        .star {
-            position: fixed;
-            width: 5px;
-            height: 6px;
-            background: yellow;
-            border-radius: 50%;
-            z-index: -2;
-            box-shadow: 0 0 4px 1px yellow;
+        .clue-box:hover {
+            transform: scale(1.05);
+            background-color: #1c5380;
         }
 
         /* Modal Styles */
-        .modal {
+        .modal, .hint-modal {
             display: none;
             position: fixed;
             z-index: 1;
@@ -150,7 +143,7 @@
             background-color: rgba(0,0,0,0.4);
         }
 
-        .modal-content {
+        .modal-content, .hint-content {
             background-color: #B22222;
             margin: 15% auto;
             padding: 20px;
@@ -158,6 +151,9 @@
             width: 80%;
             max-width: 600px;
             color: white;
+            border-radius: 8px;
+            position: relative;
+            animation: modalPop 0.3s ease-out;
         }
 
         .close {
@@ -174,20 +170,33 @@
             text-decoration: none;
             cursor: pointer;
         }
+
+        @keyframes modalPop {
+            from {transform: scale(0.7); opacity: 0;}
+            to {transform: scale(1); opacity: 1;}
+        }
     </style>
 </head>
 <body>
     <!-- Header Image -->
     <img src="images/frostville-header.png" alt="Frostville Winter Mystery" class="header-image" onclick="openModal()">
 
-    <!-- Modal -->
+    <!-- Context Modal -->
     <div id="contextModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
             <h2>Welcome to the Frostville Winter Mystery!</h2>
             <p>'Twas a week before Christmas and Frostville was buzzing with excitement for its annual Christmas extravaganza. The Christmas market in the town square sparkled with twinkling lights as visitors flocked from far and wide to ride the giant ferris wheel, tuck into delicious roasted chestnuts, and sip steaming hot chocolate from the cosy winter bar. Inside the town hall, a magical craft market offered every Christmas gift imaginable, handmade with love and holiday cheer. Visitors left Frostville full of festive cheer, excited for the Christmas celebrations to come.</p>
             <p>But this year was different. Just days after leaving Frostville, some of the people who attended began to feel unwell. Could something sinister have crept into Frostville's winter wonderland? It's up to you to uncover the mystery! Track down what this illness is, figure out how it spread through Frostville, and use the clues to crack the puzzle. Can you save Christmas in time?</p>
-            <p>Enter your answers to see if you solved the mystery. After submitting your answers, you have the opportunity to enter a competition to win XXX.</p>
+        </div>
+    </div>
+
+    <!-- Hint Modal -->
+    <div id="hintModal" class="hint-modal">
+        <div class="hint-content">
+            <span class="close" onclick="closeHintModal()">&times;</span>
+            <h2>Clue</h2>
+            <p id="hintText"></p>
         </div>
     </div>
 
@@ -264,6 +273,18 @@
         
         <!-- Result Display -->
         <p id="result"></p>
+
+        <!-- Clue Boxes -->
+        <div class="clue-container">
+            <div class="clue-box" onclick="showHint(1)">
+                <h3>Clue 1</h3>
+                <p>The Riddle of the Snowmen</p>
+            </div>
+            <div class="clue-box" onclick="showHint(2)">
+                <h3>Clue 2</h3>
+                <p>Click to reveal</p>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -278,6 +299,12 @@
             suspect: "",
             transmission: "",
             location: ""
+        };
+
+        // Hint system
+        const hints = {
+            1: "In the heart of Frostville, two identical snowmen stand in the town square. But these snowmen are far from ordinary—once a day, for one magical hour, they come to life and speak. Yet, there's a twist: one snowman always tells the truth, and the other always lies. You don't know which is which, but you've come seeking answers about what bug has caused the illness in Frostville and think they might have the answer.\n\nSnowman A says:\n\"If you asked my brother whether the outbreak was caused by influenza, he would say no. Also, I heard rumours that the outbreak began because of a bad chestnut\"\n\nSnowman B says:\n\"It's a virus causing the outbreak so antibiotics won't work here. A vaccine exists against this bug though.\"\n\nCan you piece together the truth from the snowmen's riddles to determine which bug caused the outbreak?",
+            2: "Several visitors mentioned feeling feverish and having muscle aches after attending the indoor craft fair. The symptoms spread quickly among family members who hadn't even visited Frostville..."
         };
 
         // Function to select a choice
@@ -315,45 +342,26 @@
             document.getElementById('contextModal').style.display = 'none';
         }
 
-        // Add stars to the background
-        function addStars() {
-            for (let i = 0; i < 30; i++) {
-                let star = document.createElement('div');
-                star.className = 'star';
-                star.style.left = Math.random() * window.innerWidth + 'px';
-                star.style.top = Math.random() * window.innerHeight + 'px';
-                star.style.width = Math.random() * 4 + 2 + 'px';
-                star.style.height = star.style.width;
-                document.body.appendChild(star);
-            }
+        function showHint(hintNumber) {
+            const modal = document.getElementById('hintModal');
+            const hintText = document.getElementById('hintText');
+            hintText.innerHTML = hints[hintNumber].replace(/\n/g, '<br>');
+            modal.style.display = 'block';
         }
 
-        // Call the function to add stars
-        addStars();
-
-        // Create snowflakes
-        function createSnowflake() {
-            const snowflake = document.createElement('div');
-            snowflake.classList.add('snowflake');
-            snowflake.innerHTML = '❄';
-            snowflake.style.left = Math.random() * 100 + 'vw';
-            snowflake.style.animationDuration = Math.random() * 3 + 7 + 's';
-            snowflake.style.opacity = Math.random();
-            snowflake.style.fontSize = Math.random() * 20 + 10 + 'px';
-            document.body.appendChild(snowflake);
-
-            setTimeout(() => {
-                snowflake.remove();
-            }, 10000);
+        function closeHintModal() {
+            document.getElementById('hintModal').style.display = 'none';
         }
 
-        setInterval(createSnowflake, 100);
-
-        // Close the modal if the user clicks outside of it
+        // Window click handler for modals
         window.onclick = function(event) {
-            var modal = document.getElementById('contextModal');
-            if (event.target == modal) {
-                modal.style.display = 'none';
+            const contextModal = document.getElementById('contextModal');
+            const hintModal = document.getElementById('hintModal');
+            if (event.target == contextModal) {
+                contextModal.style.display = 'none';
+            }
+            if (event.target == hintModal) {
+                hintModal.style.display = 'none';
             }
         }
     </script>
